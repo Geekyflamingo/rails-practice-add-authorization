@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  before_action :require_login
   protect_from_forgery with: :exception
 
   def current_student
@@ -6,5 +7,13 @@ class ApplicationController < ActionController::Base
   end
 
   helper_method :current_student
+
+  private
+
+  def require_login
+    unless(current_student)
+      redirect_to(login_path)
+    end
+  end
 
 end
